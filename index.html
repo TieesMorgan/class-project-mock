@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html>
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JSFiddle ov13kan4</title>
+
+  <style>
+    
+  </style>
+
+  
+</head>
+<body>
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding Food Nutrition Claims - Health Canada</title>
+    <style>
+        /* CSS Variables for Easy Styling & High Contrast */
+        :root {
+            --gc-navy: #26374A;
+            --gc-red: #AF3C43;
+            --gc-blue: #0535D2;
+            --focus-ring: #005A9C;
+            --bg-main: #F8F9FA;
+            --bg-card: #FFFFFF;
+            --text-main: #1F2937;
+            --text-muted: #4B5563;
+            --border-color: #D1D5DB;
+            --success-bg: #E6F4EA;
+            --success-text: #137333;
+            --warning-bg: #FEF7E0;
+            --warning-text: #B06000;
+            --font-scale: 1rem;
+        }
+
+        /* High Contrast Theme Override */
+        body.high-contrast {
+            --gc-navy: #000000;
+            --gc-red: #8B0000;
+            --gc-blue: #0000FF;
+            --bg-main: #000000;
+            --bg-card: #121212;
+            --text-main: #FFFFFF;
+            --text-muted: #E0E0E0;
+            --border-color: #FFFFFF;
+            --success-bg: #004D40;
+            --success-text: #A7F3D0;
+            --warning-bg: #4A2800;
+            --warning-text: #FDE68A;
+        }
+
+        /* Global Reset & Typography */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            font-size: var(--font-scale);
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Skip Link for WCAG Keyboard Navigation */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 10px;
+            background: var(--gc-navy);
+            color: #FFFFFF;
+            padding: 8px 16px;
+            z-index: 1000;
+            text-decoration: underline;
+            border-radius: 0 0 4px 4px;
+            font-weight: bold;
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
+
+        /* Visible Universal Focus States for Accessibility */
+        *:focus-visible {
+            outline: 3px solid var(--focus-ring);
+            outline-offset: 3px;
+        }
+
+        /* Header & Navigation */
+        .gc-bar {
+            background-color: var(--gc-navy);
+            color: #FFFFFF;
+            padding: 12px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 4px solid var(--gc-red);
+        }
+
+        .gc-brand {
+            font-size: 1.2rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .gc-flag {
+            background: var(--gc-red);
+            color: #FFF;
+            padding: 2px 6px;
+            border-radius: 2px;
+            font-size: 0.8rem;
+        }
+
+        /* WCAG Accessibility Control Bar */
+        .a11y-toolbar {
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border-color);
+            padding: 10px 5%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .a11y-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .a11y-btn {
+            background: var(--bg-main);
+            color: var(--text-main);
+            border: 2px solid var(--border-color);
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .a11y-btn:hover {
+            border-color: var(--gc-blue);
+        }
+
+        /* Layout Container */
+        .container {
+            max-width: 1100px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        /* Hero Banner */
+        .hero-banner {
+            background: var(--bg-card);
+            border-left: 8px solid var(--gc-red);
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .hero-banner h1 {
+            color: var(--text-main);
+            font-size: 2.2rem;
+            margin-bottom: 12px;
+        }
+
+        /* Section Styling */
+        section {
+            background: var(--bg-card);
+            border-radius: 8px;
+            padding: 28px;
+            margin-bottom: 30px;
+            border: 1px solid var(--border-color);
+        }
+
+        section h2 {
+            font-size: 1.6rem;
+            margin-bottom: 16px;
+            color: var(--text-main);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 8px;
+        }
+
+        /* Module 1: Interactive Packaging Inspector */
+        .package-inspector {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            align-items: start;
+        }
+
+        @media (max-width: 768px) {
+            .package-inspector {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .mock-packaging {
+            background: #FFFBEB;
+            border: 3px dashed #D97706;
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            color: #1F2937;
+        }
+
+        .mock-packaging h3 {
+            font-size: 1.4rem;
+            margin-bottom: 4px;
+        }
+
+        .hotspot-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .hotspot-btn {
+            background: #FFFFFF;
+            border: 2px solid var(--gc-blue);
+            color: var(--gc-blue);
+            padding: 10px 14px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 0.95rem;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s;
+        }
+
+        .hotspot-btn:hover, .hotspot-btn:focus-visible, .hotspot-btn.active {
+            background: var(--gc-blue);
+            color: #FFFFFF;
+        }
+
+        .inspector-panel {
+            background: var(--bg-main);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            min-height: 220px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .badge-success { background: var(--success-bg); color: var(--success-text); }
+        .badge-warning { background: var(--warning-bg); color: var(--warning-text); }
+
+        /* Module 2: Searchable Claims Matrix */
+        .search-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .search-input {
+            flex: 1;
+            min-width: 250px;
+            padding: 10px 14px;
+            border: 2px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 1rem;
+            background: var(--bg-card);
+            color: var(--text-main);
+        }
+
+        .filter-chip {
+            background: var(--bg-main);
+            border: 1px solid var(--border-color);
+            padding: 8px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-main);
+        }
+
+        .filter-chip.active {
+            background: var(--gc-navy);
+            color: #FFFFFF;
+            border-color: var(--gc-navy);
+        }
+
+        .claims-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        .claim-card {
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 16px;
+            background: var(--bg-card);
+        }
+
+        .claim-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 6px;
+        }
+
+        /* Module 3: Accessibility Quiz */
+        .quiz-option {
+            width: 100%;
+            text-align: left;
+            background: var(--bg-main);
+            border: 2px solid var(--border-color);
+            color: var(--text-main);
+            padding: 12px 16px;
+            border-radius: 6px;
+            margin-top: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .quiz-option:hover {
+            border-color: var(--gc-blue);
+        }
+
+        .quiz-feedback {
+            margin-top: 16px;
+            padding: 14px;
+            border-radius: 6px;
+            display: none;
+        }
+
+        .quiz-feedback.show {
+            display: block;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--gc-navy);
+            color: #FFFFFF;
+            padding: 30px 5%;
+            margin-top: 40px;
+        }
+
+        footer a {
+            color: #93C5FD;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- WCAG Requirement: Skip to Main Content Link -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Official Header -->
+    <header class="gc-bar">
+        <div class="gc-brand">
+            <span class="gc-flag" aria-hidden="true">CA</span>
+            <span>Health Canada / Santé Canada</span>
+        </div>
+        <div>
+            <span lang="fr" style="cursor: pointer; text-decoration: underline;">Français</span>
+        </div>
+    </header>
+
+    <!-- WCAG Interactive Accessibility Bar -->
+    <aside class="a11y-toolbar" aria-label="Accessibility and Readability Tools">
+        <div class="a11y-controls">
+            <span><strong>Accessibility Tools:</strong></span>
+            <button class="a11y-btn" onclick="toggleHighContrast()" aria-pressed="false" id="contrast-btn">
+                <span>👁️</span> High Contrast
+            </button>
+            <button class="a11y-btn" onclick="adjustFontSize(0.1)" aria-label="Increase text size">
+                A+
+            </button>
+            <button class="a11y-btn" onclick="adjustFontSize(-0.1)" aria-label="Decrease text size">
+                A-
+            </button>
+            <button class="a11y-btn" onclick="resetFontSize()" aria-label="Reset text size">
+                Reset Size
+            </button>
+        </div>
+        <div class="a11y-controls">
+            <button class="a11y-btn" id="audio-btn" onclick="readAloudPage()">
+                <span>🔊</span> Listen to Page Summary
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main id="main-content" class="container" tabindex="-1">
+
+        <!-- Hero Banner -->
+        <header class="hero-banner">
+            <h1>Understanding Food Nutrition Claims</h1>
+            <p>Food labels in Canada carry different types of statements. Learn how Health Canada regulates <strong>Nutrient Content Claims</strong> and <strong>Health Claims</strong> to help you make informed and safe food choices.</p>
+        </header>
+
+        <!-- Interactive Module 1: Label Inspector -->
+        <section aria-labelledby="inspector-heading">
+            <h2 id="inspector-heading">🔍 Interactive Package Inspector</h2>
+            <p style="margin-bottom: 16px;">Select any highlighted claim on the sample food package below to reveal its regulatory meaning under Canadian law.</p>
+
+            <div class="package-inspector">
+                <!-- Visual Package Model -->
+                <div class="mock-packaging" role="region" aria-label="Sample Cereal Packaging">
+                    <p style="text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; color: #78350F;">Sample Product</p>
+                    <h3>Whole Grain Oat Cereal</h3>
+                    <p style="font-size: 0.85rem; margin-bottom: 12px;">Net Wt. 450g</p>
+
+                    <div class="hotspot-group">
+                        <button class="hotspot-btn" onclick="inspect('fibre', this)" aria-expanded="false" aria-controls="inspector-panel">
+                            1. "Very High Source of Fibre"
+                        </button>
+                        <button class="hotspot-btn" onclick="inspect('cholesterol', this)" aria-expanded="false" aria-controls="inspector-panel">
+                            2. "Oat fibre helps lower cholesterol"
+                        </button>
+                        <button class="hotspot-btn" onclick="inspect('superfood', this)" aria-expanded="false" aria-controls="inspector-panel">
+                            3. "Superfood Smart Choice"
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Live Result Inspector Output -->
+                <div class="inspector-panel" id="inspector-panel" aria-live="polite">
+                    <div id="inspector-content">
+                        <h3 style="font-size: 1.1rem; margin-bottom: 8px;">Select a claim to inspect</h3>
+                        <p style="color: var(--text-muted);">Click or press Enter on any of the numbered package buttons to check if Health Canada regulates the statement.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Module 2: Search and Filter Database -->
+        <section aria-labelledby="matrix-heading">
+            <h2 id="matrix-heading">📊 Claims Search & Regulatory Matrix</h2>
+            <p style="margin-bottom: 16px;">Search terms or select a category to filter regulated claims versus unregulated marketing phrases.</p>
+
+            <div class="search-toolbar">
+                <label for="claim-search" class="visually-hidden" style="position:absolute; width:1px; height:1px; overflow:hidden;">Search claims</label>
+                <input type="text" id="claim-search" class="search-input" placeholder="Search claims (e.g., Sodium, Heart, Adaptogen)..." onkeyup="filterClaims()">
+
+                <button class="filter-chip active" onclick="setCategory('all', this)">All Claims</button>
+                <button class="filter-chip" onclick="setCategory('nutrient', this)">Nutrient Content</button>
+                <button class="filter-chip" onclick="setCategory('health', this)">Health Claims</button>
+                <button class="filter-chip" onclick="setCategory('unregulated', this)">Unregulated</button>
+            </div>
+
+            <div class="claims-grid" id="claims-grid" aria-live="polite">
+                <!-- Dynamically populated via JS -->
+            </div>
+        </section>
+
+        <!-- Interactive Module 3: WCAG Self-Assessment Quiz -->
+        <section aria-labelledby="quiz-heading">
+            <h2 id="quiz-heading">🧠 Quick Knowledge Check</h2>
+            <p><strong>Question:</strong> You see a juice carton that says: <em>"Detoxifies your body naturally!"</em> How does Health Canada classify this claim?</p>
+
+            <div id="quiz-container">
+                <button class="quiz-option" onclick="checkQuiz(1, this)">
+                    A) Approved Disease Risk Reduction Claim
+                </button>
+                <button class="quiz-option" onclick="checkQuiz(2, this)">
+                    B) Standard Nutrient Content Claim
+                </button>
+                <button class="quiz-option" onclick="checkQuiz(3, this)">
+                    C) Unregulated/Vague Marketing Claim (Not permitted to make health guarantees)
+                </button>
+            </div>
+
+            <div id="quiz-feedback" class="quiz-feedback" aria-live="assertive"></div>
+        </section>
+
+    </main>
+
+    <!-- Official Footer -->
+    <footer>
+        <div class="container" style="margin:0 auto; padding:0;">
+            <p><strong>Health Canada / Government of Canada</strong></p>
+            <p style="margin-top: 6px;">Questions about food claims regulations? Email: <a href="mailto:healthclaims-allegationssante@hc-sc.gc.ca">healthclaims-allegationssante@hc-sc.gc.ca</a></p>
+            <p style="margin-top: 12px; font-size: 0.85rem; opacity: 0.8;">Date modified: 2026-09-15 | Meets WCAG 2.1 AA Accessibility Standards</p>
+        </div>
+    </footer>
+
+    <!-- Interactive JavaScript Logic -->
+    <script>
+        /* --- 1. Accessibility Controls (High Contrast, Text Resizing, Speech) --- */
+        let currentFontScale = 1.0;
+
+        function toggleHighContrast() {
+            const body = document.body;
+            const btn = document.getElementById('contrast-btn');
+            body.classList.toggle('high-contrast');
+            const isHigh = body.classList.contains('high-contrast');
+            btn.setAttribute('aria-pressed', isHigh);
+        }
+
+        function adjustFontSize(delta) {
+            currentFontScale = Math.max(0.8, Math.min(1.4, currentFontScale + delta));
+            document.documentElement.style.setProperty('--font-scale', currentFontScale + 'rem');
+        }
+
+        function resetFontSize() {
+            currentFontScale = 1.0;
+            document.documentElement.style.setProperty('--font-scale', '1rem');
+        }
+
+        function readAloudPage() {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const text = "Understanding Food Nutrition Claims by Health Canada. Food labels carry Nutrient Content Claims, Health Claims, and unregulated marketing words. Use this page to inspect claims, search regulations, and test your knowledge.";
+                const utterance = new SpeechSynthesisUtterance(text);
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert("Text-to-speech is not supported on this browser.");
+            }
+        }
+
+        /* --- 2. Interactive Packaging Inspector Data & Handler --- */
+        const inspectorData = {
+            'fibre': {
+                badge: 'Regulated Nutrient Claim',
+                badgeClass: 'badge-success',
+                title: 'Very High Source of Fibre',
+                description: 'This is a standardized Nutrient Content Claim. To use this statement, the product must contain at least 6 grams of dietary fibre per serving as specified by Canadian regulations.'
+            },
+            'cholesterol': {
+                badge: 'Regulated Therapeutic Health Claim',
+                badgeClass: 'badge-success',
+                title: 'Oat Fibre Helps Lower Cholesterol',
+                description: 'Health Canada permits this health claim because significant scientific evidence links beta-glucan oat fibre to cholesterol reduction when consumed as part of a healthy diet.'
+            },
+            'superfood': {
+                badge: 'Unregulated Marketing Term',
+                badgeClass: 'badge-warning',
+                title: 'Superfood Smart Choice',
+                description: 'Terms like "Superfood", "Smart", or "Detox" are unstandardized marketing buzzwords. Health Canada does not regulate them. Consumers should check the Nutrition Facts Table instead.'
+            }
+        };
+
+        function inspect(key, btnElem) {
+            // Update aria-expanded attributes
+            document.querySelectorAll('.hotspot-btn').forEach(btn => {
+                btn.classList.remove('active');
+                btn.setAttribute('aria-expanded', 'false');
+            });
+            btnElem.classList.add('active');
+            btnElem.setAttribute('aria-expanded', 'true');
+
+            const item = inspectorData[key];
+            const panel = document.getElementById('inspector-content');
+            panel.innerHTML = `
+                <span class="badge ${item.badgeClass}">${item.badge}</span>
+                <h3 style="font-size: 1.2rem; margin-bottom: 8px;">${item.title}</h3>
+                <p>${item.description}</p>
+            `;
+        }
+
+        /* --- 3. Search & Category Matrix Data & Filter Logic --- */
+        const claimsDatabase = [
+            { name: 'Low Sodium', cat: 'nutrient', status: 'Regulated', desc: 'Contains 140 mg or less of sodium per serving.' },
+            { name: 'Trans-Fat Free', cat: 'nutrient', status: 'Regulated', desc: 'Contains less than 0.2g trans fat and low saturated fat.' },
+            { name: 'Vitamin D & Strong Bones', cat: 'health', status: 'Regulated', desc: 'Nutrient function claim authorized for bone health.' },
+            { name: 'Plant Sterols & Cholesterol', cat: 'health', status: 'Regulated', desc: 'Approved therapeutic claim for lowering blood cholesterol.' },
+            { name: 'Clean Eating / Superfood', cat: 'unregulated', status: 'Unregulated', desc: 'Vague marketing phrase with no legal health definition.' },
+            { name: 'Adaptogen Boost', cat: 'unregulated', status: 'Unregulated', desc: 'Unproven general wellness claim; requires scientific proof.' }
+        ];
+
+        let activeCategory = 'all';
+
+        function renderClaims() {
+            const grid = document.getElementById('claims-grid');
+            const searchText = document.getElementById('claim-search').value.toLowerCase();
+
+            const filtered = claimsDatabase.filter(item => {
+                const matchesCat = activeCategory === 'all' || item.cat === activeCategory;
+                const matchesSearch = item.name.toLowerCase().includes(searchText) || item.desc.toLowerCase().includes(searchText);
+                return matchesCat && matchesSearch;
+            });
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `<p style="grid-column: 1/-1; color: var(--text-muted);">No matching claims found.</p>`;
+                return;
+            }
+
+            grid.innerHTML = filtered.map(item => `
+                <article class="claim-card">
+                    <span class="badge ${item.status === 'Regulated' ? 'badge-success' : 'badge-warning'}">${item.status}</span>
+                    <h3>${item.name}</h3>
+                    <p style="font-size: 0.9rem;">${item.desc}</p>
+                </article>
+            `).join('');
+        }
+
+        function setCategory(cat, btn) {
+            activeCategory = cat;
+            document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+            btn.classList.add('active');
+            renderClaims();
+        }
+
+        function filterClaims() {
+            renderClaims();
+        }
+
+        /* --- 4. Interactive Knowledge Check (Quiz) --- */
+        function checkQuiz(option, btn) {
+            const feedback = document.getElementById('quiz-feedback');
+            if (option === 3) {
+                feedback.className = 'quiz-feedback show';
+                feedback.style.background = 'var(--success-bg)';
+                feedback.style.color = 'var(--success-text)';
+                feedback.innerHTML = '<strong>Correct! 🎉</strong> "Detoxifying" is an unregulated, vague claim. Health Canada does not approve general detoxification guarantees on food labels.';
+            } else {
+                feedback.className = 'quiz-feedback show';
+                feedback.style.background = 'var(--warning-bg)';
+                feedback.style.color = 'var(--warning-text)';
+                feedback.innerHTML = '<strong>Incorrect.</strong> Try again! Hint: Look out for words that promise medical detoxing without regulatory backing.';
+            }
+        }
+
+        // Initialize Page Data
+        renderClaims();
+    </script>
+</body>
+</html>
+
+  <script>
+    
+  </script>
+</body>
+</html>
