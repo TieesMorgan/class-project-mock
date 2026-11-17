@@ -1,20 +1,4 @@
 <!DOCTYPE html>
-<html>
-
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>JSFiddle ov13kan4</title>
-
-  <style>
-    
-  </style>
-
-  
-</head>
-<body>
-  <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -99,6 +83,11 @@
             outline-offset: 3px;
         }
 
+        .gc-bar *:focus-visible {
+            outline: 3px solid #FFFFFF;
+            outline-offset: 3px;
+        }
+
         /* Header & Navigation */
         .gc-bar {
             background-color: var(--gc-navy);
@@ -124,6 +113,25 @@
             padding: 2px 6px;
             border-radius: 2px;
             font-size: 0.8rem;
+        }
+
+        /* Language Switcher Button */
+        .lang-btn {
+            background: transparent;
+            color: #FFFFFF;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            padding: 6px 14px;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: underline;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        .lang-btn:hover {
+            background: #FFFFFF;
+            color: var(--gc-navy);
         }
 
         /* WCAG Accessibility Control Bar */
@@ -377,39 +385,41 @@
 <body>
 
     <!-- WCAG Requirement: Skip to Main Content Link -->
-    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <a href="#main-content" class="skip-link" id="skip-link">Skip to main content</a>
 
     <!-- Official Header -->
     <header class="gc-bar">
         <div class="gc-brand">
             <span class="gc-flag" aria-hidden="true">CA</span>
-            <span>Health Canada / Santé Canada</span>
+            <span id="brand-name">Health Canada / Santé Canada</span>
         </div>
         <div>
-            <span lang="fr" style="cursor: pointer; text-decoration: underline;">Français</span>
+            <button type="button" class="lang-btn" id="lang-toggle" onclick="toggleLanguage()" lang="fr" aria-label="Passer à la version française">
+                Français
+            </button>
         </div>
     </header>
 
     <!-- WCAG Interactive Accessibility Bar -->
-    <aside class="a11y-toolbar" aria-label="Accessibility and Readability Tools">
+    <aside class="a11y-toolbar" id="a11y-toolbar" aria-label="Accessibility and Readability Tools">
         <div class="a11y-controls">
-            <span><strong>Accessibility Tools:</strong></span>
-            <button class="a11y-btn" onclick="toggleHighContrast()" aria-pressed="false" id="contrast-btn">
-                <span>👁️</span> High Contrast
+            <span><strong id="a11y-label">Accessibility Tools:</strong></span>
+            <button type="button" class="a11y-btn" onclick="toggleHighContrast()" aria-pressed="false" id="contrast-btn">
+                <span aria-hidden="true">👁️</span> <span id="contrast-text">High Contrast</span>
             </button>
-            <button class="a11y-btn" onclick="adjustFontSize(0.1)" aria-label="Increase text size">
+            <button type="button" class="a11y-btn" onclick="adjustFontSize(0.1)" id="font-inc-btn" aria-label="Increase text size">
                 A+
             </button>
-            <button class="a11y-btn" onclick="adjustFontSize(-0.1)" aria-label="Decrease text size">
+            <button type="button" class="a11y-btn" onclick="adjustFontSize(-0.1)" id="font-dec-btn" aria-label="Decrease text size">
                 A-
             </button>
-            <button class="a11y-btn" onclick="resetFontSize()" aria-label="Reset text size">
+            <button type="button" class="a11y-btn" onclick="resetFontSize()" id="font-reset-btn">
                 Reset Size
             </button>
         </div>
         <div class="a11y-controls">
-            <button class="a11y-btn" id="audio-btn" onclick="readAloudPage()">
-                <span>🔊</span> Listen to Page Summary
+            <button type="button" class="a11y-btn" id="audio-btn" onclick="readAloudPage()">
+                <span aria-hidden="true">🔊</span> <span id="audio-text">Listen to Page Summary</span>
             </button>
         </div>
     </aside>
@@ -419,30 +429,30 @@
 
         <!-- Hero Banner -->
         <header class="hero-banner">
-            <h1>Understanding Food Nutrition Claims</h1>
-            <p>Food labels in Canada carry different types of statements. Learn how Health Canada regulates <strong>Nutrient Content Claims</strong> and <strong>Health Claims</strong> to help you make informed and safe food choices.</p>
+            <h1 id="hero-title">Understanding Food Nutrition Claims</h1>
+            <p id="hero-desc">Food labels in Canada carry different types of statements. Learn how Health Canada regulates <strong>Nutrient Content Claims</strong> and <strong>Health Claims</strong> to help you make informed and safe food choices.</p>
         </header>
 
         <!-- Interactive Module 1: Label Inspector -->
         <section aria-labelledby="inspector-heading">
             <h2 id="inspector-heading">🔍 Interactive Package Inspector</h2>
-            <p style="margin-bottom: 16px;">Select any highlighted claim on the sample food package below to reveal its regulatory meaning under Canadian law.</p>
+            <p id="inspector-intro" style="margin-bottom: 16px;">Select any highlighted claim on the sample food package below to reveal its regulatory meaning under Canadian law.</p>
 
             <div class="package-inspector">
                 <!-- Visual Package Model -->
-                <div class="mock-packaging" role="region" aria-label="Sample Cereal Packaging">
-                    <p style="text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; color: #78350F;">Sample Product</p>
-                    <h3>Whole Grain Oat Cereal</h3>
-                    <p style="font-size: 0.85rem; margin-bottom: 12px;">Net Wt. 450g</p>
+                <div class="mock-packaging" id="mock-packaging" role="region" aria-label="Sample Cereal Packaging">
+                    <p id="sample-tag" style="text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; color: #78350F;">Sample Product</p>
+                    <h3 id="product-name">Whole Grain Oat Cereal</h3>
+                    <p id="product-weight" style="font-size: 0.85rem; margin-bottom: 12px;">Net Wt. 450g</p>
 
                     <div class="hotspot-group">
-                        <button class="hotspot-btn" onclick="inspect('fibre', this)" aria-expanded="false" aria-controls="inspector-panel">
+                        <button type="button" class="hotspot-btn" id="btn-fibre" onclick="inspect('fibre', this)" aria-expanded="false" aria-controls="inspector-panel">
                             1. "Very High Source of Fibre"
                         </button>
-                        <button class="hotspot-btn" onclick="inspect('cholesterol', this)" aria-expanded="false" aria-controls="inspector-panel">
+                        <button type="button" class="hotspot-btn" id="btn-cholesterol" onclick="inspect('cholesterol', this)" aria-expanded="false" aria-controls="inspector-panel">
                             2. "Oat fibre helps lower cholesterol"
                         </button>
-                        <button class="hotspot-btn" onclick="inspect('superfood', this)" aria-expanded="false" aria-controls="inspector-panel">
+                        <button type="button" class="hotspot-btn" id="btn-superfood" onclick="inspect('superfood', this)" aria-expanded="false" aria-controls="inspector-panel">
                             3. "Superfood Smart Choice"
                         </button>
                     </div>
@@ -461,16 +471,16 @@
         <!-- Interactive Module 2: Search and Filter Database -->
         <section aria-labelledby="matrix-heading">
             <h2 id="matrix-heading">📊 Claims Search & Regulatory Matrix</h2>
-            <p style="margin-bottom: 16px;">Search terms or select a category to filter regulated claims versus unregulated marketing phrases.</p>
+            <p id="matrix-intro" style="margin-bottom: 16px;">Search terms or select a category to filter regulated claims versus unregulated marketing phrases.</p>
 
             <div class="search-toolbar">
-                <label for="claim-search" class="visually-hidden" style="position:absolute; width:1px; height:1px; overflow:hidden;">Search claims</label>
+                <label for="claim-search" id="search-label" style="position:absolute; width:1px; height:1px; overflow:hidden;">Search claims</label>
                 <input type="text" id="claim-search" class="search-input" placeholder="Search claims (e.g., Sodium, Heart, Adaptogen)..." onkeyup="filterClaims()">
 
-                <button class="filter-chip active" onclick="setCategory('all', this)">All Claims</button>
-                <button class="filter-chip" onclick="setCategory('nutrient', this)">Nutrient Content</button>
-                <button class="filter-chip" onclick="setCategory('health', this)">Health Claims</button>
-                <button class="filter-chip" onclick="setCategory('unregulated', this)">Unregulated</button>
+                <button type="button" class="filter-chip active" id="chip-all" onclick="setCategory('all', this)">All Claims</button>
+                <button type="button" class="filter-chip" id="chip-nutrient" onclick="setCategory('nutrient', this)">Nutrient Content</button>
+                <button type="button" class="filter-chip" id="chip-health" onclick="setCategory('health', this)">Health Claims</button>
+                <button type="button" class="filter-chip" id="chip-unregulated" onclick="setCategory('unregulated', this)">Unregulated</button>
             </div>
 
             <div class="claims-grid" id="claims-grid" aria-live="polite">
@@ -481,16 +491,16 @@
         <!-- Interactive Module 3: WCAG Self-Assessment Quiz -->
         <section aria-labelledby="quiz-heading">
             <h2 id="quiz-heading">🧠 Quick Knowledge Check</h2>
-            <p><strong>Question:</strong> You see a juice carton that says: <em>"Detoxifies your body naturally!"</em> How does Health Canada classify this claim?</p>
+            <p id="quiz-question"><strong>Question:</strong> You see a juice carton that says: <em>"Detoxifies your body naturally!"</em> How does Health Canada classify this claim?</p>
 
             <div id="quiz-container">
-                <button class="quiz-option" onclick="checkQuiz(1, this)">
+                <button type="button" class="quiz-option" id="quiz-opt-1" onclick="checkQuiz(1)">
                     A) Approved Disease Risk Reduction Claim
                 </button>
-                <button class="quiz-option" onclick="checkQuiz(2, this)">
+                <button type="button" class="quiz-option" id="quiz-opt-2" onclick="checkQuiz(2)">
                     B) Standard Nutrient Content Claim
                 </button>
-                <button class="quiz-option" onclick="checkQuiz(3, this)">
+                <button type="button" class="quiz-option" id="quiz-opt-3" onclick="checkQuiz(3)">
                     C) Unregulated/Vague Marketing Claim (Not permitted to make health guarantees)
                 </button>
             </div>
@@ -503,16 +513,274 @@
     <!-- Official Footer -->
     <footer>
         <div class="container" style="margin:0 auto; padding:0;">
-            <p><strong>Health Canada / Government of Canada</strong></p>
-            <p style="margin-top: 6px;">Questions about food claims regulations? Email: <a href="mailto:healthclaims-allegationssante@hc-sc.gc.ca">healthclaims-allegationssante@hc-sc.gc.ca</a></p>
-            <p style="margin-top: 12px; font-size: 0.85rem; opacity: 0.8;">Date modified: 2026-09-15 | Meets WCAG 2.1 AA Accessibility Standards</p>
+            <p><strong id="footer-org">Health Canada / Government of Canada</strong></p>
+            <p id="footer-contact" style="margin-top: 6px;">Questions about food claims regulations? Email: <a href="mailto:healthclaims-allegationssante@hc-sc.gc.ca">healthclaims-allegationssante@hc-sc.gc.ca</a></p>
+            <p id="footer-meta" style="margin-top: 12px; font-size: 0.85rem; opacity: 0.8;">Date modified: 2026-09-15 | Meets WCAG 2.1 AA Accessibility Standards</p>
         </div>
     </footer>
 
-    <!-- Interactive JavaScript Logic -->
+    <!-- Interactive Bilingual & Accessibility JavaScript -->
     <script>
-        /* --- 1. Accessibility Controls (High Contrast, Text Resizing, Speech) --- */
+        let currentLang = 'en';
         let currentFontScale = 1.0;
+        let activeCategory = 'all';
+        let currentInspectedKey = null;
+        let currentQuizAnswer = null;
+
+        const translations = {
+            en: {
+                pageTitle: 'Understanding Food Nutrition Claims - Health Canada',
+                skipLink: 'Skip to main content',
+                brandName: 'Health Canada / Santé Canada',
+                langBtnText: 'Français',
+                langBtnAttr: 'fr',
+                langBtnAria: 'Passer à la version française',
+                a11yToolbarAria: 'Accessibility and Readability Tools',
+                a11yLabel: 'Accessibility Tools:',
+                contrastText: 'High Contrast',
+                fontIncAria: 'Increase text size',
+                fontDecAria: 'Decrease text size',
+                fontResetText: 'Reset Size',
+                audioText: 'Listen to Page Summary',
+                speechLang: 'en-CA',
+                speechSummary: 'Understanding Food Nutrition Claims by Health Canada. Food labels carry Nutrient Content Claims, Health Claims, and unregulated marketing words. Use this page to inspect claims, search regulations, and test your knowledge.',
+                heroTitle: 'Understanding Food Nutrition Claims',
+                heroDesc: 'Food labels in Canada carry different types of statements. Learn how Health Canada regulates <strong>Nutrient Content Claims</strong> and <strong>Health Claims</strong> to help you make informed and safe food choices.',
+                inspectorHeading: '🔍 Interactive Package Inspector',
+                inspectorIntro: 'Select any highlighted claim on the sample food package below to reveal its regulatory meaning under Canadian law.',
+                packagingAria: 'Sample Cereal Packaging',
+                sampleTag: 'Sample Product',
+                productName: 'Whole Grain Oat Cereal',
+                productWeight: 'Net Wt. 450g',
+                btnFibre: '1. "Very High Source of Fibre"',
+                btnCholesterol: '2. "Oat fibre helps lower cholesterol"',
+                btnSuperfood: '3. "Superfood Smart Choice"',
+                inspectorDefaultTitle: 'Select a claim to inspect',
+                inspectorDefaultDesc: 'Click or press Enter on any of the numbered package buttons to check if Health Canada regulates the statement.',
+                matrixHeading: '📊 Claims Search & Regulatory Matrix',
+                matrixIntro: 'Search terms or select a category to filter regulated claims versus unregulated marketing phrases.',
+                searchLabel: 'Search claims',
+                searchPlaceholder: 'Search claims (e.g., Sodium, Heart, Adaptogen)...',
+                chipAll: 'All Claims',
+                chipNutrient: 'Nutrient Content',
+                chipHealth: 'Health Claims',
+                chipUnregulated: 'Unregulated',
+                noResults: 'No matching claims found.',
+                quizHeading: '🧠 Quick Knowledge Check',
+                quizQuestion: '<strong>Question:</strong> You see a juice carton that says: <em>"Detoxifies your body naturally!"</em> How does Health Canada classify this claim?',
+                quizOpt1: 'A) Approved Disease Risk Reduction Claim',
+                quizOpt2: 'B) Standard Nutrient Content Claim',
+                quizOpt3: 'C) Unregulated/Vague Marketing Claim (Not permitted to make health guarantees)',
+                quizCorrect: '<strong>Correct! 🎉</strong> "Detoxifying" is an unregulated, vague claim. Health Canada does not approve general detoxification guarantees on food labels.',
+                quizIncorrect: '<strong>Incorrect.</strong> Try again! Hint: Look out for words that promise medical detoxing without regulatory backing.',
+                footerOrg: 'Health Canada / Government of Canada',
+                footerContact: 'Questions about food claims regulations? Email: <a href="mailto:healthclaims-allegationssante@hc-sc.gc.ca">healthclaims-allegationssante@hc-sc.gc.ca</a>',
+                footerMeta: 'Date modified: 2026-09-15 | Meets WCAG 2.1 AA Accessibility Standards'
+            },
+            fr: {
+                pageTitle: 'Comprendre les allégations nutritionnelles sur les aliments - Santé Canada',
+                skipLink: 'Passer au contenu principal',
+                brandName: 'Santé Canada / Health Canada',
+                langBtnText: 'English',
+                langBtnAttr: 'en',
+                langBtnAria: 'Switch to English version',
+                a11yToolbarAria: 'Outils d\'accessibilité et de lisibilité',
+                a11yLabel: 'Outils d\'accessibilité :',
+                contrastText: 'Contraste élevé',
+                fontIncAria: 'Augmenter la taille du texte',
+                fontDecAria: 'Diminuer la taille du texte',
+                fontResetText: 'Taille par défaut',
+                audioText: 'Écouter le résumé de la page',
+                speechLang: 'fr-CA',
+                speechSummary: 'Comprendre les allégations nutritionnelles sur les aliments par Santé Canada. Les étiquettes des aliments comportent des allégations relatives à la teneur en nutriments, des allégations relatives à la santé et des termes de marketing non réglementés. Utilisez cette page pour inspecter les allégations, rechercher la réglementation et tester vos connaissances.',
+                heroTitle: 'Comprendre les allégations nutritionnelles sur les aliments',
+                heroDesc: 'Les étiquettes des aliments au Canada comportent différents types d\'énoncés. Découvrez comment Santé Canada réglemente les <strong>allégations relatives à la teneur en nutriments</strong> et les <strong>allégations relatives à la santé</strong> pour vous aider à faire des choix alimentaires éclairés et sûrs.',
+                inspectorHeading: '🔍 Inspecteur interactif d\'emballage',
+                inspectorIntro: 'Sélectionnez n\'importe quelle allégation sur l\'exemple d\'emballage alimentaire ci-dessous pour découvrir sa signification réglementaire en vertu de la loi canadienne.',
+                packagingAria: 'Exemple d\'emballage de céréales',
+                sampleTag: 'Exemple de produit',
+                productName: 'Céréales d\'avoine à grains entiers',
+                productWeight: 'Poids net 450 g',
+                btnFibre: '1. « Source très élevée de fibres »',
+                btnCholesterol: '2. « Les fibres d\'avoine contribuent à abaisser le cholestérol »',
+                btnSuperfood: '3. « Superaliment : choix intelligent »',
+                inspectorDefaultTitle: 'Sélectionnez une allégation à inspecter',
+                inspectorDefaultDesc: 'Cliquez ou appuyez sur Entrée sur l\'un des boutons numérotés de l\'emballage pour vérifier si Santé Canada réglemente l\'énoncé.',
+                matrixHeading: '📊 Recherche d\'allégations et matrice réglementaire',
+                matrixIntro: 'Recherchez des termes ou sélectionnez une catégorie pour filtrer les allégations réglementées par rapport aux expressions de marketing non réglementées.',
+                searchLabel: 'Rechercher des allégations',
+                searchPlaceholder: 'Rechercher des allégations (p. ex., sodium, cholestérol, adaptogène)...',
+                chipAll: 'Toutes les allégations',
+                chipNutrient: 'Teneur en nutriments',
+                chipHealth: 'Allégations santé',
+                chipUnregulated: 'Non réglementées',
+                noResults: 'Aucune allégation correspondante trouvée.',
+                quizHeading: '🧠 Vérification rapide des connaissances',
+                quizQuestion: '<strong>Question :</strong> Vous voyez un carton de jus sur lequel il est écrit : <em>« Détoxifie votre corps naturellement ! »</em> Comment Santé Canada classe-t-il cette allégation ?',
+                quizOpt1: 'A) Allégation approuvée de réduction du risque de maladies',
+                quizOpt2: 'B) Allégation normalisée relative à la teneur en nutriments',
+                quizOpt3: 'C) Allégation marketing vague ou non réglementée (non autorisée à faire des promesses de santé)',
+                quizCorrect: '<strong>Bonne réponse ! 🎉</strong> « Détoxifie » est une allégation vague et non réglementée. Santé Canada n\'approuve pas les garanties générales de détoxification sur les étiquettes des aliments.',
+                quizIncorrect: '<strong>Mauvaise réponse.</strong> Essayez encore ! Indice : Méfiez-vous des mots qui promettent une détoxification médicale sans fondement réglementaire.',
+                footerOrg: 'Santé Canada / Gouvernement du Canada',
+                footerContact: 'Questions sur la réglementation des allégations alimentaires ? Courriel : <a href="mailto:healthclaims-allegationssante@hc-sc.gc.ca">healthclaims-allegationssante@hc-sc.gc.ca</a>',
+                footerMeta: 'Date de modification : 2026-09-15 | Conforme aux normes d\'accessibilité WCAG 2.1 AA'
+            }
+        };
+
+        const inspectorData = {
+            en: {
+                'fibre': {
+                    badge: 'Regulated Nutrient Claim',
+                    badgeClass: 'badge-success',
+                    title: 'Very High Source of Fibre',
+                    description: 'This is a standardized Nutrient Content Claim. To use this statement, the product must contain at least 6 grams of dietary fibre per serving as specified by Canadian regulations.'
+                },
+                'cholesterol': {
+                    badge: 'Regulated Therapeutic Health Claim',
+                    badgeClass: 'badge-success',
+                    title: 'Oat Fibre Helps Lower Cholesterol',
+                    description: 'Health Canada permits this health claim because significant scientific evidence links beta-glucan oat fibre to cholesterol reduction when consumed as part of a healthy diet.'
+                },
+                'superfood': {
+                    badge: 'Unregulated Marketing Term',
+                    badgeClass: 'badge-warning',
+                    title: 'Superfood Smart Choice',
+                    description: 'Terms like "Superfood", "Smart", or "Detox" are unstandardized marketing buzzwords. Health Canada does not regulate them. Consumers should check the Nutrition Facts Table instead.'
+                }
+            },
+            fr: {
+                'fibre': {
+                    badge: 'Allégation réglementée sur la teneur nutritive',
+                    badgeClass: 'badge-success',
+                    title: 'Source très élevée de fibres',
+                    description: 'Il s\'agit d\'une allégation normalisée relative à la teneur en nutriments. Pour utiliser cet énoncé, le produit doit contenir au moins 6 grammes de fibres alimentaires par portion, conformément à la réglementation canadienne.'
+                },
+                'cholesterol': {
+                    badge: 'Allégation santé thérapeutique réglementée',
+                    badgeClass: 'badge-success',
+                    title: 'Les fibres d\'avoine contribuent à abaisser le cholestérol',
+                    description: 'Santé Canada autorise cette allégation santé parce que des preuves scientifiques solides établissent un lien entre les fibres d\'avoine (bêta-glucane) et la réduction du cholestérol dans le cadre d\'une alimentation saine.'
+                },
+                'superfood': {
+                    badge: 'Terme marketing non réglementé',
+                    badgeClass: 'badge-warning',
+                    title: 'Superaliment : choix intelligent',
+                    description: 'Des termes comme « superaliment », « intelligent » ou « détox » sont des expressions de marketing non normalisées. Santé Canada ne les réglemente pas. Les consommateurs devraient plutôt consulter le tableau de la valeur nutritive.'
+                }
+            }
+        };
+
+        const claimsDatabase = [
+            {
+                cat: 'nutrient',
+                regulated: true,
+                en: { name: 'Low Sodium', status: 'Regulated', desc: 'Contains 140 mg or less of sodium per serving.' },
+                fr: { name: 'Faible en sodium', status: 'Réglementée', desc: 'Contient 140 mg ou moins de sodium par portion.' }
+            },
+            {
+                cat: 'nutrient',
+                regulated: true,
+                en: { name: 'Trans-Fat Free', status: 'Regulated', desc: 'Contains less than 0.2g trans fat and low saturated fat.' },
+                fr: { name: 'Sans gras trans', status: 'Réglementée', desc: 'Contient moins de 0,2 g de gras trans et peu de gras saturés.' }
+            },
+            {
+                cat: 'health',
+                regulated: true,
+                en: { name: 'Vitamin D & Strong Bones', status: 'Regulated', desc: 'Nutrient function claim authorized for bone health.' },
+                fr: { name: 'Vitamine D et os solides', status: 'Réglementée', desc: 'Allégation nutritionnelle fonctionnelle autorisée pour la santé des os.' }
+            },
+            {
+                cat: 'health',
+                regulated: true,
+                en: { name: 'Plant Sterols & Cholesterol', status: 'Regulated', desc: 'Approved therapeutic claim for lowering blood cholesterol.' },
+                fr: { name: 'Stérols végétaux et cholestérol', status: 'Réglementée', desc: 'Allégation thérapeutique approuvée pour abaisser le cholestérol sanguin.' }
+            },
+            {
+                cat: 'unregulated',
+                regulated: false,
+                en: { name: 'Clean Eating / Superfood', status: 'Unregulated', desc: 'Vague marketing phrase with no legal health definition.' },
+                fr: { name: 'Alimentation pure / Superaliment', status: 'Non réglementée', desc: 'Expression marketing vague sans définition juridique en matière de santé.' }
+            },
+            {
+                cat: 'unregulated',
+                regulated: false,
+                en: { name: 'Adaptogen Boost', status: 'Unregulated', desc: 'Unproven general wellness claim; requires scientific proof.' },
+                fr: { name: 'Effet adaptogène', status: 'Non réglementée', desc: 'Allégation générale de bien-être non prouvée; exige des preuves scientifiques.' }
+            }
+        ];
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'fr' : 'en';
+            const t = translations[currentLang];
+
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+            }
+
+            document.documentElement.lang = currentLang;
+            document.title = t.pageTitle;
+
+            document.getElementById('skip-link').innerText = t.skipLink;
+            document.getElementById('brand-name').innerText = t.brandName;
+            const langBtn = document.getElementById('lang-toggle');
+            langBtn.innerText = t.langBtnText;
+            langBtn.setAttribute('lang', t.langBtnAttr);
+            langBtn.setAttribute('aria-label', t.langBtnAria);
+
+            document.getElementById('a11y-toolbar').setAttribute('aria-label', t.a11yToolbarAria);
+            document.getElementById('a11y-label').innerText = t.a11yLabel;
+            document.getElementById('contrast-text').innerText = t.contrastText;
+            document.getElementById('font-inc-btn').setAttribute('aria-label', t.fontIncAria);
+            document.getElementById('font-dec-btn').setAttribute('aria-label', t.fontDecAria);
+            document.getElementById('font-reset-btn').innerText = t.fontResetText;
+            document.getElementById('audio-text').innerText = t.audioText;
+
+            document.getElementById('hero-title').innerText = t.heroTitle;
+            document.getElementById('hero-desc').innerHTML = t.heroDesc;
+
+            document.getElementById('inspector-heading').innerText = t.inspectorHeading;
+            document.getElementById('inspector-intro').innerText = t.inspectorIntro;
+            document.getElementById('mock-packaging').setAttribute('aria-label', t.packagingAria);
+            document.getElementById('sample-tag').innerText = t.sampleTag;
+            document.getElementById('product-name').innerText = t.productName;
+            document.getElementById('product-weight').innerText = t.productWeight;
+            document.getElementById('btn-fibre').innerText = t.btnFibre;
+            document.getElementById('btn-cholesterol').innerText = t.btnCholesterol;
+            document.getElementById('btn-superfood').innerText = t.btnSuperfood;
+
+            if (currentInspectedKey) {
+                renderInspectorPanel(currentInspectedKey);
+            } else {
+                document.getElementById('inspector-content').innerHTML = `
+                    <h3 style="font-size: 1.1rem; margin-bottom: 8px;">${t.inspectorDefaultTitle}</h3>
+                    <p style="color: var(--text-muted);">${t.inspectorDefaultDesc}</p>
+                `;
+            }
+
+            document.getElementById('matrix-heading').innerText = t.matrixHeading;
+            document.getElementById('matrix-intro').innerText = t.matrixIntro;
+            document.getElementById('search-label').innerText = t.searchLabel;
+            document.getElementById('claim-search').placeholder = t.searchPlaceholder;
+            document.getElementById('chip-all').innerText = t.chipAll;
+            document.getElementById('chip-nutrient').innerText = t.chipNutrient;
+            document.getElementById('chip-health').innerText = t.chipHealth;
+            document.getElementById('chip-unregulated').innerText = t.chipUnregulated;
+            renderClaims();
+
+            document.getElementById('quiz-heading').innerText = t.quizHeading;
+            document.getElementById('quiz-question').innerHTML = t.quizQuestion;
+            document.getElementById('quiz-opt-1').innerText = t.quizOpt1;
+            document.getElementById('quiz-opt-2').innerText = t.quizOpt2;
+            document.getElementById('quiz-opt-3').innerText = t.quizOpt3;
+            if (currentQuizAnswer !== null) {
+                checkQuiz(currentQuizAnswer);
+            }
+
+            document.getElementById('footer-org').innerText = t.footerOrg;
+            document.getElementById('footer-contact').innerHTML = t.footerContact;
+            document.getElementById('footer-meta').innerText = t.footerMeta;
+        }
 
         function toggleHighContrast() {
             const body = document.body;
@@ -535,38 +803,19 @@
         function readAloudPage() {
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
-                const text = "Understanding Food Nutrition Claims by Health Canada. Food labels carry Nutrient Content Claims, Health Claims, and unregulated marketing words. Use this page to inspect claims, search regulations, and test your knowledge.";
-                const utterance = new SpeechSynthesisUtterance(text);
+                const t = translations[currentLang];
+                const utterance = new SpeechSynthesisUtterance(t.speechSummary);
+                utterance.lang = t.speechLang;
                 window.speechSynthesis.speak(utterance);
             } else {
-                alert("Text-to-speech is not supported on this browser.");
+                alert(currentLang === 'fr'
+                    ? 'La synthèse vocale n\'est pas prise en charge par ce navigateur.'
+                    : 'Text-to-speech is not supported on this browser.');
             }
         }
 
-        /* --- 2. Interactive Packaging Inspector Data & Handler --- */
-        const inspectorData = {
-            'fibre': {
-                badge: 'Regulated Nutrient Claim',
-                badgeClass: 'badge-success',
-                title: 'Very High Source of Fibre',
-                description: 'This is a standardized Nutrient Content Claim. To use this statement, the product must contain at least 6 grams of dietary fibre per serving as specified by Canadian regulations.'
-            },
-            'cholesterol': {
-                badge: 'Regulated Therapeutic Health Claim',
-                badgeClass: 'badge-success',
-                title: 'Oat Fibre Helps Lower Cholesterol',
-                description: 'Health Canada permits this health claim because significant scientific evidence links beta-glucan oat fibre to cholesterol reduction when consumed as part of a healthy diet.'
-            },
-            'superfood': {
-                badge: 'Unregulated Marketing Term',
-                badgeClass: 'badge-warning',
-                title: 'Superfood Smart Choice',
-                description: 'Terms like "Superfood", "Smart", or "Detox" are unstandardized marketing buzzwords. Health Canada does not regulate them. Consumers should check the Nutrition Facts Table instead.'
-            }
-        };
-
         function inspect(key, btnElem) {
-            // Update aria-expanded attributes
+            currentInspectedKey = key;
             document.querySelectorAll('.hotspot-btn').forEach(btn => {
                 btn.classList.remove('active');
                 btn.setAttribute('aria-expanded', 'false');
@@ -574,7 +823,11 @@
             btnElem.classList.add('active');
             btnElem.setAttribute('aria-expanded', 'true');
 
-            const item = inspectorData[key];
+            renderInspectorPanel(key);
+        }
+
+        function renderInspectorPanel(key) {
+            const item = inspectorData[currentLang][key];
             const panel = document.getElementById('inspector-content');
             panel.innerHTML = `
                 <span class="badge ${item.badgeClass}">${item.badge}</span>
@@ -583,40 +836,32 @@
             `;
         }
 
-        /* --- 3. Search & Category Matrix Data & Filter Logic --- */
-        const claimsDatabase = [
-            { name: 'Low Sodium', cat: 'nutrient', status: 'Regulated', desc: 'Contains 140 mg or less of sodium per serving.' },
-            { name: 'Trans-Fat Free', cat: 'nutrient', status: 'Regulated', desc: 'Contains less than 0.2g trans fat and low saturated fat.' },
-            { name: 'Vitamin D & Strong Bones', cat: 'health', status: 'Regulated', desc: 'Nutrient function claim authorized for bone health.' },
-            { name: 'Plant Sterols & Cholesterol', cat: 'health', status: 'Regulated', desc: 'Approved therapeutic claim for lowering blood cholesterol.' },
-            { name: 'Clean Eating / Superfood', cat: 'unregulated', status: 'Unregulated', desc: 'Vague marketing phrase with no legal health definition.' },
-            { name: 'Adaptogen Boost', cat: 'unregulated', status: 'Unregulated', desc: 'Unproven general wellness claim; requires scientific proof.' }
-        ];
-
-        let activeCategory = 'all';
-
         function renderClaims() {
             const grid = document.getElementById('claims-grid');
             const searchText = document.getElementById('claim-search').value.toLowerCase();
 
             const filtered = claimsDatabase.filter(item => {
+                const localized = item[currentLang];
                 const matchesCat = activeCategory === 'all' || item.cat === activeCategory;
-                const matchesSearch = item.name.toLowerCase().includes(searchText) || item.desc.toLowerCase().includes(searchText);
+                const matchesSearch = localized.name.toLowerCase().includes(searchText) || localized.desc.toLowerCase().includes(searchText);
                 return matchesCat && matchesSearch;
             });
 
             if (filtered.length === 0) {
-                grid.innerHTML = `<p style="grid-column: 1/-1; color: var(--text-muted);">No matching claims found.</p>`;
+                grid.innerHTML = `<p style="grid-column: 1/-1; color: var(--text-muted);">${translations[currentLang].noResults}</p>`;
                 return;
             }
 
-            grid.innerHTML = filtered.map(item => `
-                <article class="claim-card">
-                    <span class="badge ${item.status === 'Regulated' ? 'badge-success' : 'badge-warning'}">${item.status}</span>
-                    <h3>${item.name}</h3>
-                    <p style="font-size: 0.9rem;">${item.desc}</p>
-                </article>
-            `).join('');
+            grid.innerHTML = filtered.map(item => {
+                const localized = item[currentLang];
+                return `
+                    <article class="claim-card">
+                        <span class="badge ${item.regulated ? 'badge-success' : 'badge-warning'}">${localized.status}</span>
+                        <h3>${localized.name}</h3>
+                        <p style="font-size: 0.9rem;">${localized.desc}</p>
+                    </article>
+                `;
+            }).join('');
         }
 
         function setCategory(cat, btn) {
@@ -630,30 +875,24 @@
             renderClaims();
         }
 
-        /* --- 4. Interactive Knowledge Check (Quiz) --- */
-        function checkQuiz(option, btn) {
+        function checkQuiz(option) {
+            currentQuizAnswer = option;
+            const t = translations[currentLang];
             const feedback = document.getElementById('quiz-feedback');
             if (option === 3) {
                 feedback.className = 'quiz-feedback show';
                 feedback.style.background = 'var(--success-bg)';
                 feedback.style.color = 'var(--success-text)';
-                feedback.innerHTML = '<strong>Correct! 🎉</strong> "Detoxifying" is an unregulated, vague claim. Health Canada does not approve general detoxification guarantees on food labels.';
+                feedback.innerHTML = t.quizCorrect;
             } else {
                 feedback.className = 'quiz-feedback show';
                 feedback.style.background = 'var(--warning-bg)';
                 feedback.style.color = 'var(--warning-text)';
-                feedback.innerHTML = '<strong>Incorrect.</strong> Try again! Hint: Look out for words that promise medical detoxing without regulatory backing.';
+                feedback.innerHTML = t.quizIncorrect;
             }
         }
 
-        // Initialize Page Data
         renderClaims();
     </script>
-</body>
-</html>
-
-  <script>
-    
-  </script>
 </body>
 </html>
